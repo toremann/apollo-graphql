@@ -27,7 +27,29 @@ const resolvers = {
         favouriteMovies: () => {
             return _.filter(MovieList, (movie) => movie.yearOfPublication >= 2000 && movie.yearOfPublication <= 2010);
         }
+    },
+
+    Mutation: {
+        createUser: (parent, args) => {
+            const user = args.input;
+            const lastId = UserList[UserList.length - 1].id;
+            user.id = lastId + 1;
+            UserList.push(user);
+            return user;
+        },
+        updateUsername: (parent, args) => {
+            const  { id, newUsername } = args.input
+            let userUpdate;
+            UserList.forEach(() => {
+                if (user.id === id) {
+                    user.username = newUsername;
+                    userUpdate = user
+                }
+            })
+
+            return userUpdate
+        }
     }
-}
+};
 
 module.exports = { resolvers }
