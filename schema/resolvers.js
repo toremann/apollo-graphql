@@ -39,15 +39,20 @@ const resolvers = {
         },
         updateUsername: (parent, args) => {
             const  { id, newUsername } = args.input
-            let userUpdate;
-            UserList.forEach(() => {
-                if (user.id === id) {
+            let userUpdated;
+            UserList.forEach((user) => {
+                if (user.id === Number(id)) {
                     user.username = newUsername;
-                    userUpdate = user
+                    userUpdated = user;
                 }
-            })
+            });
 
-            return userUpdate
+            return userUpdated
+        },
+        deleteUser: (parent, args) => {
+            const id = args.id;
+            _.remove(UserList, (user) => user.id === Number(id))
+            return null, (console.log(`deleted user with id: ${id}`))
         }
     }
 };
