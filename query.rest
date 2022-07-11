@@ -1,6 +1,10 @@
-#
+###
 
 curl --request POST \
   --header 'content-type: application/json' \
   --url http://localhost:4000/ \
   --data '{"query":"query { __typename }"}'
+
+
+### Health check 
+GET http://localhost:4000/.well-known/apollo/server-health
