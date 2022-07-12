@@ -15,5 +15,10 @@
         "lodash": "^4.17.21",
         "nodemon": "^2.0.19",
         "open": "^8.4.0"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "/server/logs/"
+        ]
     }
 }

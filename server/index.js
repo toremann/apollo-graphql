@@ -12,16 +12,15 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: (params) => () => {
-        let vars = params.req.body.variables;
-        let query = params.req.body.query;
+        const vars = params.req.body.variables;
+        const query = params.req.body.query;
+        console.log(query);
+        console.log('vars', vars.lenght);
 
-        console.log('vars type', typeof vars);
-        console.log(Object.keys(vars).length);
-
-        if (Object.keys(vars).lenght === 0) {
-            console.log('no vars');
+        if (vars.lenght === 'undefined') {
+            console.log('vars 0, undefined or null');
         } else {
-            console.log('it has vars', params.req.body.variables);
+            console.log('it has vars', vars);
         }
 
         fs.appendFileSync(
