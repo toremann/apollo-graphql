@@ -18,7 +18,12 @@ const typeDefs = gql`
         isInTheaters: Boolean!
     }
 
+    type Stocks {
+        instrument_info: String!
+    }
+
     type Query {
+        allthestocks: [Stocks]
         users: [User!]!
         user(id: ID!): User!
         movies: [Movie!]!
