@@ -1,5 +1,5 @@
 const { UserList, MovieList } = require('../FakeData');
-const _ = require('lodash')
+const _ = require('lodash');
 
 const resolvers = {
     Query: {
@@ -26,7 +26,7 @@ const resolvers = {
     User: {
         favouriteMovies: () => {
             return _.filter(MovieList, (movie) => movie.yearOfPublication >= 2000 && movie.yearOfPublication <= 2010);
-        }
+        },
     },
 
     Mutation: {
@@ -38,7 +38,7 @@ const resolvers = {
             return user;
         },
         updateUsername: (parent, args) => {
-            const  { id, newUsername } = args.input
+            const { id, newUsername } = args.input;
             let userUpdated;
             UserList.forEach((user) => {
                 if (user.id === Number(id)) {
@@ -47,14 +47,14 @@ const resolvers = {
                 }
             });
 
-            return userUpdated
+            return userUpdated;
         },
         deleteUser: (parent, args) => {
             const id = args.id;
-            _.remove(UserList, (user) => user.id === Number(id))
-            return null, (console.log(`deleted user with id: ${id}`))
-        }
-    }
+            _.remove(UserList, (user) => user.id === Number(id));
+            return null, console.log(`deleted user with id: ${id}`);
+        },
+    },
 };
 
-module.exports = { resolvers }
+module.exports = { resolvers };
