@@ -15,6 +15,8 @@ const server = new ApolloServer({
         let vars = params.req.body.variables;
         let query = params.req.body.query; // regex this
 
+        console.log(params.req.body.query);
+
         if (vars === 'undefined' || Object.keys(vars).length === 0) {
             vars = 'No vars';
         }
@@ -26,6 +28,7 @@ const server = new ApolloServer({
                     date: new Date().toLocaleDateString('en-GB'),
                     time: new Date().toLocaleTimeString('en-GB'),
                     ip: params.req.ip,
+                    // query: query.replace(/{.*$/s, ''),
                     query: query,
                     variables: vars,
                 },
