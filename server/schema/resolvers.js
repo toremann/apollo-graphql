@@ -11,7 +11,6 @@ const resolvers = {
             const symbol = args.symbol;
             console.log(`Query for: ${symbol}`);
             const stock = _.find(StockList, (el) => el.instrument_info.symbol === symbol); //shorthand notation
-            console.log(`Results for: ${symbol}`, stock);
             return stock;
         },
     },

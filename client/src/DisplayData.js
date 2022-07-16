@@ -35,14 +35,13 @@ const GET_STOCK_BY_SYMBOL = gql`
 `;
 
 export const DisplayData = () => {
-    const [movieSearched, setMovieSearch] = useState('');
     const [stockSearched, setStockSearch] = useState('');
 
     // Create User States
 
     // const { data, loading, error, refetch } = useQuery(QUERY_ALL_USERS);
     const { data: stockData, loading, error, refetch } = useQuery(QUERY_ALL_STOCKS);
-    const [fetchStock, { data: stockSearchData, error: stockNotFound }] = useLazyQuery(GET_STOCK_BY_SYMBOL);
+    const [fetchStock, { data: stockSearchData, error: stockNotFound, loading: stockLoading }] = useLazyQuery(GET_STOCK_BY_SYMBOL);
 
     if (loading) {
         return <h1>Loading..</h1>;
@@ -51,6 +50,8 @@ export const DisplayData = () => {
     if (error) {
         return <h1>API offline</h1>;
     }
+
+    console.log(stockSearchData);
 
     return (
         <div>
@@ -64,7 +65,7 @@ export const DisplayData = () => {
                         );
                     })} */}
                 <div>
-                    <input type="text" placeholder="search" onChange={(event) => setStockSearch(event.target.value)} />
+                    <input type="text" placeholder="Ticker.." onChange={(event) => setStockSearch(event.target.value.toLocaleUpperCase())} />
 
                     <button
                         onClick={() => {
@@ -80,9 +81,11 @@ export const DisplayData = () => {
                     <div>
                         {stockSearchData && (
                             <div>
-                                <h1>Stock: {stockSearchData.name} </h1>
+                                <h1>Name: {stockSearchData.stock.instrument_info.name} </h1>
+                                <h1>Symbol: {stockSearchData.stock.instrument_info.symbol} </h1>
                             </div>
                         )}
+                        {stockLoading && <h1>Searching...</h1>}
                         {stockNotFound && <h1>No data found..</h1>}
                     </div>
                 </div>
