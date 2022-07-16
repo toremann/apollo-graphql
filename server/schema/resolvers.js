@@ -1,11 +1,11 @@
 const { UserList, MovieList } = require('../FakeData'); // modules export
-const stockData = require('../StockData'); // no modules export
+const { StockList } = require('../StockData'); // no modules export
 const _ = require('lodash');
 
 const resolvers = {
     Query: {
-        allthestocks: () => {
-            return stockData;
+        stocks: () => {
+            return StockList;
         },
 
         // USER RESOLVERS

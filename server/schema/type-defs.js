@@ -18,12 +18,28 @@ const typeDefs = gql`
         isInTheaters: Boolean!
     }
 
-    type Stocks {
-        instrument_info: String!
+    type Stock {
+        instrument_info: InstrumentInfo
+        status_info: StatusInfo
+    }
+
+    type InstrumentInfo {
+        instrument_id: ID!
+        name: String
+        long_name: String
+        symbol: String
+
+        #      instrument_info:
+        # field --->      name: 'SALMAR',
+    }
+
+    type StatusInfo {
+        trading_status: String
     }
 
     type Query {
-        allthestocks: [Stocks]
+        stocks: [Stock!]!
+        stock(symbol: String!): Stock!
         users: [User!]!
         user(id: ID!): User!
         movies: [Movie!]!
