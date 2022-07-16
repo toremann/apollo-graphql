@@ -9,9 +9,9 @@ const resolvers = {
 
         stock: (parent, args) => {
             const symbol = args.symbol;
-            console.log(symbol);
+            console.log(`Query for: ${symbol}`);
             const stock = _.find(StockList, (el) => el.instrument_info.symbol === symbol); //shorthand notation
-            console.log(stock);
+            console.log(`Results for: ${symbol}`, stock);
             return stock;
         },
     },

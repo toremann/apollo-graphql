@@ -1,58 +1,48 @@
 import React from 'react';
-import { useQuery, gql, useLazyQuery, useMutation } from '@apollo/client';
+import { useQuery, gql, useLazyQuery } from '@apollo/client';
 import { useState } from 'react';
 
-const QUERY_ALL_USERS = gql`
-    query getAllUser {
-        users {
-            id
-            name
-            age
-            username
+const QUERY_ALL_STOCKS = gql`
+    query allStocks {
+        stocks {
+            instrument_info {
+                name
+                instrument_id
+                long_name
+                symbol
+            }
+            status_info {
+                trading_status
+            }
         }
     }
 `;
 
-const QUERY_ALL_MOVIES = gql`
-    query getAllMovies {
-        movies {
-            name
-        }
-    }
-`;
-
-const GET_MOVIE_BY_NAME = gql`
-    query Movie($name: String!) {
-        movie(name: $name) {
-            name
-        }
-    }
-`;
-
-const CREATE_USER_MUTATION = gql`
-    mutation CreateUser($input: CreateUserInput!) {
-        createUser(input: $input) {
-            name
-            id
+const GET_STOCK_BY_SYMBOL = gql`
+    query Stock($symbol: String!) {
+        stock(symbol: $symbol) {
+            instrument_info {
+                name
+                instrument_id
+                long_name
+                symbol
+            }
+            status_info {
+                trading_status
+            }
         }
     }
 `;
 
 export const DisplayData = () => {
     const [movieSearched, setMovieSearch] = useState('');
+    const [stockSearched, setStockSearch] = useState('');
 
     // Create User States
-    const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-    const [age, setAge] = useState(0);
-    const [nationality, setNationality] = useState('');
 
-    const { data, loading, error, refetch } = useQuery(QUERY_ALL_USERS);
-    const { data: movieData } = useQuery(QUERY_ALL_MOVIES);
-    const [fetchMovie, { data: movieSearchData, error: movieError }] =
-        useLazyQuery(GET_MOVIE_BY_NAME);
-
-    const [createUser] = useMutation(CREATE_USER_MUTATION);
+    // const { data, loading, error, refetch } = useQuery(QUERY_ALL_USERS);
+    const { data: stockData, loading, error, refetch } = useQuery(QUERY_ALL_STOCKS);
+    const [fetchStock, { data: stockSearchData, error: stockNotFound }] = useLazyQuery(GET_STOCK_BY_SYMBOL);
 
     if (loading) {
         return <h1>Loading..</h1>;
@@ -65,78 +55,22 @@ export const DisplayData = () => {
     return (
         <div>
             <div>
-                <input
-                    type="text"
-                    placeholder="Name.."
-                    onChange={(event) => setName(event.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Username.."
-                    onChange={(event) => setUsername(event.target.value)}
-                />
-                <input
-                    type="number"
-                    placeholder="Age.."
-                    onChange={(event) => setAge(event.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Nationality.."
-                    onChange={(event) => setNationality(event.target.value)}
-                />
-                <button
-                    onClick={() => {
-                        createUser({
-                            variables: {
-                                input: {
-                                    name,
-                                    username,
-                                    age: Number(age),
-                                    nationality,
-                                },
-                            },
-                        });
-
-                        refetch();
-                    }}
-                >
-                    Create User
-                </button>
-            </div>
-            <div>
-                {data &&
-                    data.users.map((user) => {
+                {/* {stockData &&
+                    stockData.stocks.map((stock) => {
                         return (
                             <div>
-                                <h1>Name: {user.name} </h1>
-                                <h1>Username: {user.username} </h1>
-                                <h1>Age: {user.age} </h1>
+                                <h1>{stock.instrument_info.name} </h1>
                             </div>
                         );
-                    })}
-            </div>
-            <div>
-                {movieData &&
-                    movieData.movies.map((movie) => {
-                        return (
-                            <div>
-                                <h1>Movie: {movie.name} </h1>
-                            </div>
-                        );
-                    })}
+                    })} */}
                 <div>
-                    <input
-                        type="text"
-                        placeholder="search"
-                        onChange={(event) => setMovieSearch(event.target.value)}
-                    />
+                    <input type="text" placeholder="search" onChange={(event) => setStockSearch(event.target.value)} />
 
                     <button
                         onClick={() => {
-                            fetchMovie({
+                            fetchStock({
                                 variables: {
-                                    name: movieSearched,
+                                    symbol: stockSearched,
                                 },
                             });
                         }}
@@ -144,12 +78,12 @@ export const DisplayData = () => {
                         Fetch data{' '}
                     </button>
                     <div>
-                        {movieSearchData && (
+                        {stockSearchData && (
                             <div>
-                                <h1>Movie: {movieSearchData.movie.name} </h1>
+                                <h1>Stock: {stockSearchData.name} </h1>
                             </div>
                         )}
-                        {movieError && <h1>No data found..</h1>}
+                        {stockNotFound && <h1>No data found..</h1>}
                     </div>
                 </div>
             </div>
