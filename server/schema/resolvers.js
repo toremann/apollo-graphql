@@ -1,4 +1,3 @@
-const { UserList, MovieList } = require('../FakeData'); // modules export
 const { StockList } = require('../StockData'); // no modules export
 const _ = require('lodash');
 
@@ -8,19 +7,12 @@ const resolvers = {
             return StockList;
         },
 
-        // USER RESOLVERS
-        users: () => {
-            return UserList;
-        },
-        user: (parent, args) => {
-            const id = args.id;
-            const user = _.find(UserList, { id: Number(id) }); //shorthand notation
-            return user;
-        },
-    },
-    User: {
-        favouriteMovies: () => {
-            return _.filter(MovieList, (movie) => movie.yearOfPublication >= 2000 && movie.yearOfPublication <= 2010);
+        stock: (parent, args) => {
+            const symbol = args.symbol;
+            console.log(symbol);
+            const stock = _.find(StockList, (el) => el.instrument_info.symbol === symbol); //shorthand notation
+            console.log(stock);
+            return stock;
         },
     },
 };
