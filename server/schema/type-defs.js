@@ -31,6 +31,23 @@ const typeDefs = gql`
         stocks: [Stock!]!
         stock(symbol: String!): Stock!
     }
+
+    # mongodb stuff
+    type Feed {
+        feed: String
+    }
+
+    input FeedInput {
+        feed: String
+    }
+
+    type Query {
+        feed(id: ID!): Feed
+    }
+
+    type Mutation {
+        createFeed(feedInput: FeedInput): Feed!
+    }
 `;
 
 module.exports = { typeDefs };
