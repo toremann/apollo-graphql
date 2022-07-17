@@ -35,6 +35,7 @@ const typeDefs = gql`
     # mongodb stuff
     type Feed {
         feed: String
+        created: String
     }
 
     input FeedInput {

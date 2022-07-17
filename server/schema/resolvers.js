@@ -7,11 +7,11 @@ const resolvers = {
         async createFeed(parent, { feedInput: { feed } }) {
             const newFeed = new Feed({
                 feed: feed,
-                date: new Date().toISOString(),
+                created: new Date().toISOString(),
             });
 
             const res = await newFeed.save();
-            console.log(res);
+            console.log(`Mutation -> res from mongoDB ${res}`);
             return {
                 id: res.id,
                 ...res._doc,
