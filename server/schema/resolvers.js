@@ -9,7 +9,7 @@ const resolvers = {
 
         stock: (parent, args) => {
             const symbol = args.symbol;
-            console.log(`Query for: ${symbol}`);
+            console.log(`Resolver -> query for: ${symbol}`);
             const stock = _.find(StockList, (el) => el.instrument_info.symbol === symbol); //shorthand notation
             return stock;
         },
