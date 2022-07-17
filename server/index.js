@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const MONGODB = process.env.DB_CONNECT;
+const mongoose = require('mongoose');
 
 const { ApolloServer } = require('apollo-server');
 const { typeDefs } = require('./schema/type-defs');
@@ -21,7 +22,7 @@ const server = new ApolloServer({
         }
 
         fs.appendFileSync(
-            './logs/logs.json',
+            './logs/graphql_logs.json',
             JSON.stringify(
                 {
                     date: new Date().toLocaleDateString('en-GB'),
@@ -35,6 +36,40 @@ const server = new ApolloServer({
             )
         );
     },
+});
+
+mongoose.connect(MONGODB, { useNewUrlParser: true }).then(() => {
+    console.log('MongoDB Connected');
+
+    fs.appendFileSync(
+        './logs/mongodb_logs.json',
+        JSON.stringify(
+            {
+                type: 'connected',
+                date: new Date().toLocaleDateString('en-GB'),
+                time: new Date().toLocaleTimeString('en-GB'),
+            },
+            null,
+            4
+        )
+    );
+});
+
+mongoose.connection.on('error', (err) => {
+    logError(err);
+
+    fs.appendFileSync(
+        './logs/mongodb_logs.json',
+        JSON.stringify(
+            {
+                type: 'disconnected',
+                date: new Date().toLocaleDateString('en-GB'),
+                time: new Date().toLocaleTimeString('en-GB'),
+            },
+            null,
+            4
+        )
+    );
 });
 
 server.listen().then(({ url }) => {
