@@ -1,11 +1,7 @@
 import './App.css';
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-} from '@apollo/client';
-import { DisplayData } from './DisplayData';
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery } from '@apollo/client';
+import { DisplayData } from './components/DisplayData';
+import { DisplayFeed } from './components/DisplayFeed';
 
 function App() {
     const client = new ApolloClient({
@@ -18,6 +14,7 @@ function App() {
     return (
         <ApolloProvider client={client}>
             <div className="App">
+                <DisplayFeed />
                 <DisplayData />
             </div>
         </ApolloProvider>

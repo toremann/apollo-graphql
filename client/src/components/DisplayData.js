@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery, gql, useLazyQuery } from '@apollo/client';
 import { useState } from 'react';
+import styles from '../styles.module.css';
 
 const QUERY_ALL_STOCKS = gql`
     query allStocks {
@@ -44,11 +45,18 @@ export const DisplayData = () => {
     const [fetchStock, { data: stockSearchData, error: stockNotFound, loading: stockLoading }] = useLazyQuery(GET_STOCK_BY_SYMBOL);
 
     if (loading) {
-        return <h1>Loading..</h1>;
+        return (
+            <div className={styles.loader}>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        );
     }
 
     if (error) {
-        return <h1>API offline</h1>;
+        return <h1 className={styles.offline}>API offline</h1>;
     }
 
     console.log(stockSearchData);
