@@ -62,7 +62,8 @@ export const DisplayData = () => {
     console.log(stockSearchData);
 
     return (
-        <div>
+        <div className={styles.displaydata__container}>
+            <h1 className={styles.offline}>Get some data</h1>
             <div>
                 {/* {stockData &&
                     stockData.stocks.map((stock) => {

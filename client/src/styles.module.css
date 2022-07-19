@@ -1,3 +1,11 @@
+.displayfeed__container {
+  background-color: beige;
+}
+
+.displaydata__container {
+  background-color: rgb(238, 238, 238);
+}
+
 .offline {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

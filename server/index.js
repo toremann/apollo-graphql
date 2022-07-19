@@ -16,9 +16,9 @@ const server = new ApolloServer({
         let query = params.req.body.query;
 
         if (Object.keys(vars).lenght === 0) {
-            console.log('Context -> no vars');
+            console.log('Apollo: Context -> no vars');
         } else {
-            console.log('Context ->', params.req.body.variables);
+            console.log('Apollo: Context ->', params.req.body.variables);
         }
 
         fs.appendFileSync(
@@ -39,7 +39,7 @@ const server = new ApolloServer({
 });
 
 mongoose.connect(MONGODB, { useNewUrlParser: true }).then(() => {
-    console.log('MongoDB Connected');
+    console.log('Mongoose: MongoDB Connected');
 
     fs.appendFileSync(
         './logs/mongodb_logs.json',
@@ -73,5 +73,5 @@ mongoose.connection.on('error', (err) => {
 });
 
 server.listen().then(({ url }) => {
-    console.log(`Server running: ${url}`);
+    console.log(`Apollo: Server running: ${url}`);
 });
